@@ -7,6 +7,8 @@ nltk.download('punkt')
 
 def clean_text(text):
 
+    text = text.strip().replace('\n', ' ')
+    text = regex.sub(r'(?<!\d)\.(?!\d)', '. ', text)
     text = regex.sub("(?s)<ref>.+?</ref>", "", text) # remove reference links
     text = regex.sub("(?s)<[^>]+>", "", text) # remove html tags
     text = regex.sub("&[a-z]+;", "", text) # remove html entities
@@ -15,7 +17,6 @@ def clean_text(text):
     text = regex.sub("(?s)\[\[([^]]+\|)", "", text) # remove link target strings
     text = regex.sub("(?s)\[\[([^]]+\:.+?]])", "", text) # remove media links
     text = regex.sub("[']{5}", "", text) # remove italic+bold symbols
-#    text = regex.sub(u"[^ \r\n\p{Latin}\-'‘’.?!]", " ", text)
     text = text.lower()
     text = regex.sub("[ ]{2,}", " ", text) # Squeeze spaces.
     return text

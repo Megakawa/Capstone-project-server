@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import SummaryTextView
+from .views import SummaryTextView, SummaryLinkView
 
 urlpatterns = [
-    path('summarize/', SummaryTextView.as_view(), name='summarize-text'),
+    path('text/', SummaryTextView.as_view(), name='summarize-text'),
+    path('link/', SummaryLinkView.as_view(), name='summarize-link'),
 ]

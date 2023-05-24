@@ -6,7 +6,8 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .processing.summarize_text import summarize_text
-from .serializers import SummaryTextSerializer
+from .serializers import SummaryTextSerializer, SummaryLinkSerializer
+from .processing.summarize_link import summarize_link
 
 class SummaryTextView(APIView):
     """
@@ -20,6 +21,22 @@ class SummaryTextView(APIView):
             text = serializer.validated_data['text']
             percentage = serializer.validated_data['percentage']
             summary = summarize_text(text, percentage)
+            return Response({'summary': summary})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SummaryLinkView(APIView):
+    """
+    API endpoint that summarizes input link.
+    """
+    serializer_class = SummaryLinkSerializer
+    @swagger_auto_schema(request_body=serializer_class)
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            url = serializer.validated_data['url']
+            percentage = serializer.validated_data['percentage']
+            summary = summarize_link(url, percentage)
             return Response({'summary': summary})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
