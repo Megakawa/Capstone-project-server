@@ -19,8 +19,8 @@ class SummaryTextView(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             text = serializer.validated_data['text']
-            percentage = serializer.validated_data['percentage']
-            summary = summarize_text(text, percentage)
+            n_sen = serializer.validated_data['n_sen']
+            summary = summarize_text(text, n_sen)
             return Response({'summary': summary})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -35,8 +35,8 @@ class SummaryLinkView(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             url = serializer.validated_data['url']
-            percentage = serializer.validated_data['percentage']
-            summary = summarize_link(url, percentage)
+            n_sen = serializer.validated_data['n_sen']
+            summary = summarize_link(url, n_sen)
             return Response({'summary': summary})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
