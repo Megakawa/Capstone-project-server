@@ -48,4 +48,6 @@ urlpatterns = [
     path('', lambda request: redirect('/admin', permanent=False)),
 
     path('admin/', admin.site.urls),
+    path('api/account/', include('account.urls')),
+    path('api/summary/', include('summary_api.urls')),
 ]

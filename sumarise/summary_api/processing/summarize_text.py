@@ -25,7 +25,7 @@ def summarize_text(text, percentage):
         for j in range(len(cluster_indices)):
             if scores[j] > centroid_score:
                 similarity_to_others = [cluster_similarity[j][k] for k in range(len(cluster_indices)) if k != j]
-                if all(similarity >= 0.2 for similarity in similarity_to_others):
+                if all(similarity >= 0.8 for similarity in similarity_to_others):
                     centroid_score = scores[j]
                     centroid_index = j
 
